@@ -6,6 +6,7 @@ package kata3;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import javax.swing.text.StyledEditorKit;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -18,9 +19,12 @@ import org.jfree.ui.ApplicationFrame;
  * @author usuario
  */
 public class HistogramDisplay extends ApplicationFrame{
+    
+    private final Histogram<String> histo;
 
-    public HistogramDisplay() {
+    public HistogramDisplay(Histogram<String> histo) {
         super("HISTROGRAMA");
+        this.histo = histo; 
         setContentPane(createPanel());
         pack();
     }
@@ -38,18 +42,9 @@ public class HistogramDisplay extends ApplicationFrame{
     
     private DefaultCategoryDataset createDataset(){
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(8, "ENE", "gmail.com");
-        dataset.addValue(10, "ENE", "hotmail.com");
-        dataset.addValue(7, "ENE", "ulpgc.es");
-        dataset.addValue(9, "ENE", "ull.es");
-        dataset.addValue(8, "FEB", "gmail.com");
-        dataset.addValue(11, "FEB", "hotmail.com");
-        dataset.addValue(6, "FEB", "ulpgc.es");
-        dataset.addValue(8, "FEB", "ull.es");
-        dataset.addValue(9, "MAR", "gmail.com");
-        dataset.addValue(10, "MAR", "hotmail.com");
-        dataset.addValue(8, "MAR", "ulpgc.es");
-        dataset.addValue(10, "MAR", "ull.es");
+        for (String key : histo.keySet()) {
+            dataset.addValue(histo.get(key), "", key);            
+        }                     
         return dataset;
     }
     
